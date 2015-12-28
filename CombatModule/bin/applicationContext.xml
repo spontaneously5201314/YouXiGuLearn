@@ -1,0 +1,49 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:flex="http://www.springframework.org/schema/flex"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+           http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.0.xsd
+           http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.0.xsd
+		   http://www.springframework.org/schema/flex http://www.springframework.org/schema/flex/spring-flex-1.0.xsd">
+
+	<!-- 战斗action层 -->
+	<bean id="combatAction" class="com.youxigu.dynasty.combat.action.CombatAction">
+		<property name="combatService" ref="combatService"></property>
+	</bean>
+
+	<!-- 战斗service层 -->
+	<bean id="combatService" class="com.youxigu.dynasty.combat.service.impl.CombatService">
+		<property name="combatDao" ref="combatDao"></property>
+		<property name="combatEngine" ref="combatEngine"></property>
+	</bean>
+	
+	<!-- 战斗dao层 -->
+	<bean id="combatDao" class="com.youxigu.dynasty.combat.dao.impl.CombatDao">
+		<property name="sqlMapClient" ref="sqlMapClient"></property>
+	</bean>
+
+	<bean id="combatEngine" class="com.youxigu.dynasty.combat.service.impl.CombatEngine"></bean>
+
+	<!-- ibatis -->
+	<bean id="sqlMapClient" class="org.springframework.orm.ibatis.SqlMapClientFactoryBean">
+		<property name="configLocation" value="sqlmap-config.xml" />
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+
+	<bean id="sqlMapClientTemplate" class="org.springframework.orm.ibatis.SqlMapClientTemplate">
+		<property name="sqlMapClient" ref="sqlMapClient" />
+	</bean>
+	
+	<!-- 数据库连接池 -->
+	<bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource">
+		<!-- 数据库驱动 -->
+		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
+		<!-- url -->
+		<property name="url" value="jdbc:mysql://192.168.3.42:3306/qxsy_db_ios_qq_1001?characterEncoding=UTF-8" />
+		<!-- 用户名 -->
+		<property name="username" value="root" />
+		<!-- 密码 -->
+		<property name="password" value="root" />
+	</bean>
+
+</beans>

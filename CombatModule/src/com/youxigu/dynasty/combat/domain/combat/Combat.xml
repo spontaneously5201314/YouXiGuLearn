@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+   "http://ibatis-with-memcached.googlecode.com/files/sql-map-config-2.dtd">
+<sqlMap namespace="combat">
+
+	<typeAlias alias="combat" type="com.youxigu.dynasty.combat.domain.combat.Combat"/>
+
+	<select id="queryForCombat" parameterClass="long" resultClass="combat">
+		select * from combat where userId = #userId#
+	</select>
+	
+	<select id="queryForCombatById" parameterClass="String" resultClass="combat">
+		select * from combatdb where combatId = #combatId#
+	</select>
+	
+</sqlMap>

@@ -9,5 +9,4 @@ import com.youxigu.dynasty.combat.domain.combat.CombatDB;
 */
 public interface ICombatService {
 
-	public void execCombat(CombatDB combat);
 }

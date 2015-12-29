@@ -126,4 +126,292 @@ public abstract class CombatUnit implements Serializable,Cloneable {
 	 * 普通==通常是指瞬间效果，或者说对一次攻击有效，对一次防御有效的效果,一次攻击后清除
 	 */
 	protected transient Map<String, Integer> _tmpSkillEffectValues;
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public ICombatEngine getCombatEngine() {
+		return combatEngine;
+	}
+
+	public void setCombatEngine(ICombatEngine combatEngine) {
+		this.combatEngine = combatEngine;
+	}
+
+	public CombatTeam getParent() {
+		return parent;
+	}
+
+	public void setParent(CombatTeam parent) {
+		this.parent = parent;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getIcon() {
+		return icon;
+	}
+
+	public void setIcon(String icon) {
+		this.icon = icon;
+	}
+
+	public int getLevel() {
+		return level;
+	}
+
+	public void setLevel(int level) {
+		this.level = level;
+	}
+
+	public byte getInitX() {
+		return initX;
+	}
+
+	public void setInitX(byte initX) {
+		this.initX = initX;
+	}
+
+	public byte getInitY() {
+		return initY;
+	}
+
+	public void setInitY(byte initY) {
+		this.initY = initY;
+	}
+
+	public byte getInitDirection() {
+		return initDirection;
+	}
+
+	public void setInitDirection(byte initDirection) {
+		this.initDirection = initDirection;
+	}
+
+	public byte getX() {
+		return x;
+	}
+
+	public void setX(byte x) {
+		this.x = x;
+	}
+
+	public byte getY() {
+		return y;
+	}
+
+	public void setY(byte y) {
+		this.y = y;
+	}
+
+	public byte getDirection() {
+		return direction;
+	}
+
+	public void setDirection(byte direction) {
+		this.direction = direction;
+	}
+
+	public boolean isCanAttacked() {
+		return canAttacked;
+	}
+
+	public void setCanAttacked(boolean canAttacked) {
+		this.canAttacked = canAttacked;
+	}
+
+	public int getUnitEntId() {
+		return unitEntId;
+	}
+
+	public void setUnitEntId(int unitEntId) {
+		this.unitEntId = unitEntId;
+	}
+
+	public int getArmyEntId() {
+		return armyEntId;
+	}
+
+	public void setArmyEntId(int armyEntId) {
+		this.armyEntId = armyEntId;
+	}
+
+	public int getGrowing() {
+		return growing;
+	}
+
+	public void setGrowing(int growing) {
+		this.growing = growing;
+	}
+
+	public int getInitLead() {
+		return initLead;
+	}
+
+	public void setInitLead(int initLead) {
+		this.initLead = initLead;
+	}
+
+	public int getInitArmyNum() {
+		return initArmyNum;
+	}
+
+	public void setInitArmyNum(int initArmyNum) {
+		this.initArmyNum = initArmyNum;
+	}
+
+	public int getCurrArmyNum() {
+		return currArmyNum;
+	}
+
+	public void setCurrArmyNum(int currArmyNum) {
+		this.currArmyNum = currArmyNum;
+	}
+
+	public int getResumeArmyNum() {
+		return resumeArmyNum;
+	}
+
+	public void setResumeArmyNum(int resumeArmyNum) {
+		this.resumeArmyNum = resumeArmyNum;
+	}
+
+	public short getHpStatus() {
+		return hpStatus;
+	}
+
+	public void setHpStatus(short hpStatus) {
+		this.hpStatus = hpStatus;
+	}
+
+	public short getUnitType() {
+		return unitType;
+	}
+
+	public void setUnitType(short unitType) {
+		this.unitType = unitType;
+	}
+
+	public int getAwardExp() {
+		return awardExp;
+	}
+
+	public void setAwardExp(int awardExp) {
+		this.awardExp = awardExp;
+	}
+
+	public boolean isCurrRoundAttacked() {
+		return currRoundAttacked;
+	}
+
+	public void setCurrRoundAttacked(boolean currRoundAttacked) {
+		this.currRoundAttacked = currRoundAttacked;
+	}
+
+	public double getCurrHarm() {
+		return currHarm;
+	}
+
+	public void setCurrHarm(double currHarm) {
+		this.currHarm = currHarm;
+	}
+
+	public double getCurrPower() {
+		return currPower;
+	}
+
+	public void setCurrPower(double currPower) {
+		this.currPower = currPower;
+	}
+
+	public short getSortDistance() {
+		return sortDistance;
+	}
+
+	public void setSortDistance(short sortDistance) {
+		this.sortDistance = sortDistance;
+	}
+
+	public short getSortYDis() {
+		return sortYDis;
+	}
+
+	public void setSortYDis(short sortYDis) {
+		this.sortYDis = sortYDis;
+	}
+
+	public Map<Short, List<CombatSkill>> getSkills() {
+		return skills;
+	}
+
+	public void setSkills(Map<Short, List<CombatSkill>> skills) {
+		this.skills = skills;
+	}
+
+	public List<CombatSkillEffect> getSkillEffects() {
+		return skillEffects;
+	}
+
+	public void setSkillEffects(List<CombatSkillEffect> skillEffects) {
+		this.skillEffects = skillEffects;
+	}
+
+	public Map<String, Integer> getSkillEffectValues() {
+		return skillEffectValues;
+	}
+
+	public void setSkillEffectValues(Map<String, Integer> skillEffectValues) {
+		this.skillEffectValues = skillEffectValues;
+	}
+
+	public Map<String, Integer> getTmpSkillEffectValues() {
+		return tmpSkillEffectValues;
+	}
+
+	public void setTmpSkillEffectValues(Map<String, Integer> tmpSkillEffectValues) {
+		this.tmpSkillEffectValues = tmpSkillEffectValues;
+	}
+
+	public CombatSkill getSpecialSkill() {
+		return specialSkill;
+	}
+
+	public void setSpecialSkill(CombatSkill specialSkill) {
+		this.specialSkill = specialSkill;
+	}
+
+	public List<CombatSkillEffect> get_skillEffects() {
+		return _skillEffects;
+	}
+
+	public void set_skillEffects(List<CombatSkillEffect> _skillEffects) {
+		this._skillEffects = _skillEffects;
+	}
+
+	public Map<String, Integer> get_skillEffectValues() {
+		return _skillEffectValues;
+	}
+
+	public void set_skillEffectValues(Map<String, Integer> _skillEffectValues) {
+		this._skillEffectValues = _skillEffectValues;
+	}
+
+	public Map<String, Integer> get_tmpSkillEffectValues() {
+		return _tmpSkillEffectValues;
+	}
+
+	public void set_tmpSkillEffectValues(Map<String, Integer> _tmpSkillEffectValues) {
+		this._tmpSkillEffectValues = _tmpSkillEffectValues;
+	}
 }

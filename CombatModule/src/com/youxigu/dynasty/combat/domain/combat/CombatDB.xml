@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
-   "http://ibatis-with-memcached.googlecode.com/files/sql-map-config-2.dtd">
+   "http://ibatis-with-memcached.googlecode.com/files/sql-map-2.dtd">
 <sqlMap namespace="combat">
 
 	<typeAlias alias="combat" type="com.youxigu.dynasty.combat.domain.combat.Combat"/>

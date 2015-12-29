@@ -1,10 +1,12 @@
 package com.youxigu.dynasty.combat.dao;
 
 import java.sql.SQLException;
+import java.util.List;
 
-import org.springframework.orm.ibatis.support.SqlMapClientDaoSupport;
-
+import com.youxigu.dynasty.combat.domain.attackrelation.ArmyAttackRelation;
 import com.youxigu.dynasty.combat.domain.combat.CombatDB;
+import com.youxigu.dynasty.combat.domain.combat.CombatFactor;
+import com.youxigu.dynasty.combat.domain.combat.CombatHarmFactor;
 
 /**
 * @Description: 
@@ -16,5 +18,12 @@ public interface ICombatDao{
 	public CombatDB findCombatByUserId(int userId);
 	
 	public CombatDB getCombatById(String combatId) throws SQLException;
+	
+	public List<ArmyAttackRelation> getArmyAttackRelation();
+
+	public List<CombatFactor> getCombatFactor();
+
+	public List<CombatHarmFactor> getCombatHarmFactor();
+
 
 }

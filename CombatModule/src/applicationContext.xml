@@ -19,10 +19,13 @@
 	
 	<!-- 战斗dao层 -->
 	<bean id="combatDao" class="com.youxigu.dynasty.combat.dao.impl.CombatDao">
-		<property name="sqlMapClient" ref="sqlMapClient"></property>
+		<!-- <property name="sqlMapClient" ref="sqlMapClient"></property> -->
+		<property name="sqlMapClientTemplate" ref="sqlMapClientTemplate"></property>
 	</bean>
 
-	<bean id="combatEngine" class="com.youxigu.dynasty.combat.service.impl.CombatEngine"></bean>
+	<bean id="combatEngine" class="com.youxigu.dynasty.combat.service.impl.CombatEngine">
+		<property name="combatDao" ref="combatDao"></property>
+	</bean>
 
 	<!-- ibatis -->
 	<bean id="sqlMapClient" class="org.springframework.orm.ibatis.SqlMapClientFactoryBean">

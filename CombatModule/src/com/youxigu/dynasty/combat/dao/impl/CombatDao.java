@@ -1,11 +1,15 @@
 package com.youxigu.dynasty.combat.dao.impl;
 
 import java.sql.SQLException;
+import java.util.List;
 
 import org.springframework.orm.ibatis.support.SqlMapClientDaoSupport;
 
 import com.youxigu.dynasty.combat.dao.ICombatDao;
+import com.youxigu.dynasty.combat.domain.attackrelation.ArmyAttackRelation;
 import com.youxigu.dynasty.combat.domain.combat.CombatDB;
+import com.youxigu.dynasty.combat.domain.combat.CombatFactor;
+import com.youxigu.dynasty.combat.domain.combat.CombatHarmFactor;
 
 /**
 * @Description: 从数据库中查找战斗团队信息的dao
@@ -21,9 +25,23 @@ public class CombatDao extends SqlMapClientDaoSupport implements ICombatDao{
 
 	public CombatDB getCombatById(String combatId) throws SQLException {
 		return (CombatDB) this.getSqlMapClientTemplate().queryForObject("queryForCombatById", combatId);
-//		return (Combat) this.getSqlMapClient().queryForObject("queryForCombatById", combatId);
 	}
-	//org.springframework.orm.ibatis.support.SqlMapClientDaoSupport.getSqlMapClientTemplate()
+
+	@Override
+	public List<ArmyAttackRelation> getArmyAttackRelation() {
+		return this.getSqlMapClientTemplate().queryForList("youxigu.queryForArmyAttackRelation");
+	}
+
+	@Override
+	public List<CombatFactor> getCombatFactor() {
+		return this.getSqlMapClientTemplate().queryForList("youxigu.queryForCombatFactor");
+	}
+
+	@Override
+	public List<CombatHarmFactor> getCombatHarmFactor() {
+		return this.getSqlMapClientTemplate().queryForList("youxigu.queryForCombatHarmFactor");
+	}
+
 
 
 	

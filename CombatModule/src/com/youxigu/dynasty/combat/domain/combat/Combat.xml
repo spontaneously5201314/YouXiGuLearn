@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+   "http://ibatis-with-memcached.googlecode.com/files/sql-map-2.dtd">
+<sqlMap namespace="youxigu">
+	<select id="queryForArmyAttackRelation" resultClass="com.youxigu.dynasty.combat.domain.attackrelation.ArmyAttackRelation">
+		select * from armyattackrelation
+	</select>
+	
+	<select id="queryForCombatFactor" resultClass="com.youxigu.dynasty.combat.domain.combat.CombatFactor">
+		select * from combatfactor
+	</select>
+	
+	<select id="queryForCombatHarmFactor" resultClass="com.youxigu.dynasty.combat.domain.combat.CombatHarmFactor">
+		select * from combatharmfactor
+	</select>
+</sqlMap>

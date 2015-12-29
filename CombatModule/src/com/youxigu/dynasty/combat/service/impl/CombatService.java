@@ -25,11 +25,6 @@ public class CombatService implements ICombatService {
 		this.combatDao = combatDao;
 	}
 
-	@Override
-	public void execCombat(CombatDB combat) {
-		combatEngine.execCombat(combat);
-	}
-
 	public CombatDB getCombatById(String combatId) {
 		try {
 			return combatDao.getCombatById(combatId);

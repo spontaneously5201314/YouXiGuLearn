@@ -1,6 +1,6 @@
 package com.youxigu.dynasty.combat.service;
 
-import com.youxigu.dynasty.combat.domain.combat.Combat;
+import com.youxigu.dynasty.combat.domain.combat.CombatDB;
 
 /**
 * @Description: 战斗service的接口类
@@ -9,5 +9,5 @@ import com.youxigu.dynasty.combat.domain.combat.Combat;
 */
 public interface ICombatService {
 
-	public void execCombat(Combat combat);
+	public void execCombat(CombatDB combat);
 }

@@ -3,7 +3,7 @@ package com.youxigu.dynasty.combat.service;
 import java.io.Serializable;
 import java.util.HashMap;
 
-import com.youxigu.dynasty.combat.domain.combat.Combat;
+import com.youxigu.dynasty.combat.domain.combat.CombatDB;
 
 /**
  * @Description: 战斗引擎接口
@@ -17,5 +17,5 @@ public interface ICombatEngine extends Serializable {
 	 * @param combat 包括一场战斗的所有数据
 	 * @return
 	 */
-	public HashMap<String, String> execCombat(Combat combat);
+	public HashMap<String, String> execCombat(CombatDB combat);
 }

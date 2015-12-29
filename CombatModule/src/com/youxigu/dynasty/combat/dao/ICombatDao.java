@@ -4,7 +4,7 @@ import java.sql.SQLException;
 
 import org.springframework.orm.ibatis.support.SqlMapClientDaoSupport;
 
-import com.youxigu.dynasty.combat.domain.combat.Combat;
+import com.youxigu.dynasty.combat.domain.combat.CombatDB;
 
 /**
 * @Description: 
@@ -13,8 +13,8 @@ import com.youxigu.dynasty.combat.domain.combat.Combat;
 */
 public interface ICombatDao{
 
-	public Combat findCombatByUserId(int userId);
+	public CombatDB findCombatByUserId(int userId);
 	
-	public Combat getCombatById(String combatId) throws SQLException;
+	public CombatDB getCombatById(String combatId) throws SQLException;
 
 }

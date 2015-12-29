@@ -3,7 +3,7 @@ package com.youxigu.dynasty.combat.service.impl;
 import java.sql.SQLException;
 
 import com.youxigu.dynasty.combat.dao.impl.CombatDao;
-import com.youxigu.dynasty.combat.domain.combat.Combat;
+import com.youxigu.dynasty.combat.domain.combat.CombatDB;
 import com.youxigu.dynasty.combat.service.ICombatService;
 
 /**
@@ -26,11 +26,11 @@ public class CombatService implements ICombatService {
 	}
 
 	@Override
-	public void execCombat(Combat combat) {
+	public void execCombat(CombatDB combat) {
 		combatEngine.execCombat(combat);
 	}
 
-	public Combat getCombatById(String combatId) {
+	public CombatDB getCombatById(String combatId) {
 		try {
 			return combatDao.getCombatById(combatId);
 		} catch (SQLException e) {

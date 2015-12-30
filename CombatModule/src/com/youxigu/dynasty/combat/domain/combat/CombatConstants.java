@@ -18,4 +18,6 @@ public class CombatConstants implements Serializable {
 	 * 进攻方赢得战斗
 	 */
 	public static final byte ATK_WIN = 2;
+	
+	public static final short BEHAVIORS_ROUNDCHANGE = 11;
 }

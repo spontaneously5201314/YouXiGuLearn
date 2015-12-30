@@ -3,6 +3,7 @@ package com.youxigu.dynasty.combat.service.impl;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -10,6 +11,7 @@ import java.util.Map;
 import com.youxigu.dynasty.combat.dao.ICombatDao;
 import com.youxigu.dynasty.combat.domain.attackrelation.ArmyAttackRelation;
 import com.youxigu.dynasty.combat.domain.behavior.AbstractCombatBehavior;
+import com.youxigu.dynasty.combat.domain.behavior.RoundChangeBehavior;
 import com.youxigu.dynasty.combat.domain.combat.Combat;
 import com.youxigu.dynasty.combat.domain.combat.CombatConstants;
 import com.youxigu.dynasty.combat.domain.combat.CombatFactor;
@@ -34,26 +36,62 @@ public class CombatEngine implements ICombatEngine {
 		this.combatDao = combatDao;
 	}
 	
-	private static MoveComparator moveComparator = new MoveComparator<CombatUnit>();
+	/**
+	 * 移动排序
+	 */
+	private static MoveComparator moveComparator = new MoveComparator();
 	
-	static class MoveComparator<CombatUnit> implements Comparator<CombatUnit>{
+	static class MoveComparator<T extends CombatUnit> implements Comparator<CombatUnit>{
 
 		@Override
-		public int compare(CombatUnit o1, CombatUnit o2) {
-			return 0;//TODO 这里的比较逻辑没有写
+		public int compare(CombatUnit unit1, CombatUnit unit2) {
+			long mobility1 = unit1._getMobility();
+			long mobility2 = unit2._getMobility();
+			if (mobility1 == mobility2) {
+				// 进攻方优先 出手/优先攻击
+				int direct1 = unit1.getDirection();
+				int direct2 = unit2.getDirection();
+				if (direct1 == direct2) {
+					// 阵法位置越小的优先
+					int pos1 = unit1._getFormationPos();
+					int pos2 = unit2._getFormationPos();
+					return pos1 > pos2 ? 1 : -1;
+				} else {
+					return direct2 > direct1 ? 1 : -1;
+				}
+			} else {
+				return mobility1 > mobility2 ? 1 : -1;
+			}
 		}
-		
 	}
 	
-	private static AttackComparator atkComparator = new AttackComparator<CombatUnit>();
+	/**
+	 * 战斗力排序
+	 */
+	private static AttackComparator atkComparator = new AttackComparator();
 	
-	static class AttackComparator<CombatUnit> implements Comparator<CombatUnit>{
+	static class AttackComparator<T extends CombatUnit> implements Comparator<CombatUnit>{
 
 		@Override
-		public int compare(CombatUnit o1, CombatUnit o2) {
-			return 0;//TODO 这里的比较逻辑没有写
+		public int compare(CombatUnit unit1, CombatUnit unit2) {
+			long mobility1 = unit1._getMobility();
+			long mobility2 = unit2._getMobility();
+			if (mobility1 == mobility2) {
+				// 进攻方优先 出手/优先攻击
+				int direct1 = unit1.getDirection();
+				int direct2 = unit2.getDirection();
+				if (direct1 == direct2) {
+					// 阵法位置越小的优先
+					int pos1 = unit1._getFormationPos();
+					int pos2 = unit2._getFormationPos();
+					return pos1 > pos2 ? 1 : -1;
+				} else {
+					return direct2 > direct1 ? 1 : -1;
+				}
+			} else {
+				return mobility2 > mobility1 ? 1 : -1;
+			}
 		}
-		
 	}
 
 	/**
@@ -97,7 +135,6 @@ public class CombatEngine implements ICombatEngine {
 	@Override
 	public void execCombat(Combat combat) {
 		// 有了兵种间攻击优先级和系数，攻击公式的系数，攻击伤害的系数
-		long time = System.currentTimeMillis();
 		CombatTeam attackerTeam = combat.getAttackerTeam();
 		CombatTeam defenderTeam = combat.getDefenderTeam();
 		if(attackerTeam == null || defenderTeam == null)
@@ -137,18 +174,87 @@ public class CombatEngine implements ICombatEngine {
 			combat.afterCombat();
 		}
 	}
-
-	private void doBeforeNextRound(Combat combat, List<com.youxigu.dynasty.combat.domain.combat.CombatUnit> units) {
-		// TODO Auto-generated method stub
-		
+	
+	/**
+	 * 战斗开始前所需要做的
+	 * @param combat
+	 * @param units
+	 */
+	private void doBeforeNextRound(Combat combat, List<CombatUnit> units) {
+		//增加回合数
+		int round = combat.increaseRound();
+		RoundChangeBehavior rBehavior = new RoundChangeBehavior(CombatConstants.BEHAVIORS_ROUNDCHANGE, round);
+		if(round == 1){
+			combat.getPreBehaviors().add(rBehavior);
+		}else{
+			combat.getLastSubBehaviors().add(rBehavior);
+		}
+		//按照战力排序攻守双方武将，依次出招
+		Iterator<CombatUnit> iterator = units.iterator();
+		while(iterator.hasNext()){
+			CombatUnit unit = iterator.next();
+			if(unit.dead()){
+				iterator.remove();
+			}else{
+				//战斗单元没有死的情况下，增加出手的机会，就计算战力，并释放技能
+				unit.increasePower();
+				unit.setCurrRoundAttacked(false);
+			}
+		}
+		//获得回合开始前所有的动作
+		List<AbstractCombatBehavior> subBehaviors = new LinkedList<AbstractCombatBehavior>();
+		//回合开始前,对于每个战斗单元判断是否被对方收买
+		iterator = units.iterator();
+		while(iterator.hasNext()){
+			CombatUnit unit = iterator.next();
+			if(unit.dead()){
+				iterator.remove();
+			}else{
+				//释放技能
+				//TODO
+			}
+		}
+		combat.addSubBehavior(subBehaviors);
 	}
 
-	private void doNextRound(Combat combat, List<com.youxigu.dynasty.combat.domain.combat.CombatUnit> units) {
-		// TODO Auto-generated method stub
-		
+	/**
+	 * 每回合内 移动 和 攻击 分为2级阶段 第一阶段为移动阶段: 在移动阶段内，比较兵种机动力，机动力低的优先移动，但移动后不攻击。
+	 * 第二阶段为攻击阶段: 在攻击阶段内，比较兵种机动力，机动力高的优先进行攻击。
+	 * 而且每回合结束，每个战斗单元的战力可能发生变化，所有在每个回合开始前都要重新进行排序
+	 * @param combat
+	 * @param units
+	 */
+	private void doNextRound(Combat combat, List<CombatUnit> units) {
+		Collections.sort(units, moveComparator);
+		List<AbstractCombatBehavior> lastSubBehaviors = combat.getLastSubBehaviors();
+		Iterator<CombatUnit> iterator = units.iterator();
+		while(iterator.hasNext()){
+			CombatUnit unit = iterator.next();
+			if(unit.dead()){
+				iterator.remove();
+			}else{
+				//移动
+				AbstractCombatBehavior moveBehavior = unit.doMove();
+				lastSubBehaviors.add(moveBehavior);
+			}
+		}
+		Collections.sort(units, atkComparator);
+		iterator = units.iterator();
+		while(iterator.hasNext()){
+			CombatUnit unit = iterator.next();
+			if(unit.dead()){
+				iterator.remove();
+			}else{
+				//攻击
+				unit.attack();
+			}
+		}
+		if(combat.isEnd()){
+			return ;
+		}
 	}
 
-	private void doafterNextRound(Combat combat, List<com.youxigu.dynasty.combat.domain.combat.CombatUnit> units) {
+	private void doafterNextRound(Combat combat, List<CombatUnit> units) {
 		// TODO Auto-generated method stub
 		
 	}

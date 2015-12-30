@@ -14,6 +14,15 @@ public class RoundChangeBehavior extends AbstractCombatBehavior {
 
 	protected int roundId;
 
+	public RoundChangeBehavior() {
+		
+	}
+
+	public RoundChangeBehavior(short behaviorId, int roundId) {
+		this.behaviorId = behaviorId;
+		this.roundId = roundId;
+	}
+
 	public int getRoundId() {
 		return roundId;
 	}

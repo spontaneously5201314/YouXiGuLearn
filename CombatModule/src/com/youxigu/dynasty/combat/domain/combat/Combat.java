@@ -1,6 +1,7 @@
 package com.youxigu.dynasty.combat.domain.combat;
 
 import java.io.Serializable;
+import java.util.LinkedList;
 import java.util.List;
 
 import com.youxigu.dynasty.combat.domain.behavior.AbstractCombatBehavior;
@@ -18,8 +19,14 @@ public class Combat implements Serializable {
 	private int terrian;
 	private CombatTeam attackerTeam;
 	private CombatTeam defenderTeam;
+	/**
+	 * 战斗前的动作应该是单个list包含的所有动作
+	 */
 	private List<AbstractCombatBehavior> preBehaviors;
-	private List<AbstractCombatBehavior> behaviors;
+	/**
+	 * 战斗中的动作应该是每个回合一个list，每个list中包含该回合中所有武将的动作
+	 */
+	private List<List<AbstractCombatBehavior>> behaviors;
 	private int round;
 	private byte winType;
 	private CombatRob combatRob;
@@ -82,11 +89,11 @@ public class Combat implements Serializable {
 		this.preBehaviors = preBehaviors;
 	}
 
-	public List<AbstractCombatBehavior> getBehaviors() {
+	public List<List<AbstractCombatBehavior>> getBehaviors() {
 		return behaviors;
 	}
-
-	public void setBehaviors(List<AbstractCombatBehavior> behaviors) {
+ 
+	public void setBehaviors(List<List<AbstractCombatBehavior>> behaviors) {
 		this.behaviors = behaviors;
 	}
 
@@ -96,6 +103,10 @@ public class Combat implements Serializable {
 
 	public void setRound(int round) {
 		this.round = round;
+	}
+	
+	public int increaseRound(){
+		return this.round++;
 	}
 
 	public byte getWinType() {
@@ -140,5 +151,25 @@ public class Combat implements Serializable {
 		// TODO 这里要根据战斗结果计算战斗的成绩，分为攻守双方各五个档
 		
 	}
+	
+	public List<AbstractCombatBehavior> getLastSubBehaviors(){
+		if(behaviors == null){
+			behaviors = new LinkedList<List<AbstractCombatBehavior>>();
+		}
+		int count = behaviors.size();
+		if(count >= 1){
+			return behaviors.get(count-1);
+		}else{
+			List<AbstractCombatBehavior> subs = new LinkedList<AbstractCombatBehavior>();
+			behaviors.add(subs);
+			return subs;
+		}
+	}
 
+	public void addSubBehavior(List<AbstractCombatBehavior> subBehaviors) {
+		if(behaviors == null){
+			behaviors = new LinkedList<List<AbstractCombatBehavior>>();
+		}
+		behaviors.add(subBehaviors);
+	}
 }

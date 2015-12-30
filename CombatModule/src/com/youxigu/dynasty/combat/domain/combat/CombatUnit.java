@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
+import com.youxigu.dynasty.combat.domain.behavior.AbstractCombatBehavior;
 import com.youxigu.dynasty.combat.domain.skill.CombatSkill;
 import com.youxigu.dynasty.combat.domain.skill.CombatSkillEffect;
 import com.youxigu.dynasty.combat.service.ICombatEngine;
@@ -414,4 +415,193 @@ public abstract class CombatUnit implements Serializable,Cloneable {
 	public void set_tmpSkillEffectValues(Map<String, Integer> _tmpSkillEffectValues) {
 		this._tmpSkillEffectValues = _tmpSkillEffectValues;
 	}
+	/**
+	 * 战斗单元的机动力：影响移动的先后顺序
+	 */
+	public abstract long _getMobility();
+
+	/**
+	 * 战斗单元的行动力：战场上每回合最远的移动距离
+	 * 
+	 * @return
+	 */
+	public abstract int _getMoveRange();
+
+	/**
+	 * 战斗单元的攻击/移动频率：攻击/移动一次后，需要多少回合可以再次攻击、移动，>=1,默认为1，每回合都攻击
+	 * 
+	 * @return
+	 */
+	public abstract double _getFrequency();
+
+	/**
+	 * 战斗单元的攻击范围
+	 * 
+	 * @return
+	 */
+	public abstract int _getAttackRange();
+
+	/**
+	 * 得到战斗单元带兵类型
+	 * 
+	 * @return
+	 */
+	public abstract String _getUnitArmyType();
+
+	/**
+	 * 带兵类型对应的整数值,技能使用这个作为过滤兵种的条件
+	 * 
+	 * @return
+	 */
+	public abstract int _getUnitArmyTypeInt();
+	
+	public abstract int _getUnitBaseArmyTypeInt();	
+
+	public abstract String _getArmyName();
+
+	/**
+	 * 得到阵法位置
+	 * 
+	 * @return
+	 */
+	public abstract int _getFormationPos();
+
+	/**
+	 * 攻击类型 =0物理攻击 =1法术攻击 10;//单挑物理攻击 11;//单挑法术攻击
+	 * 
+	 * @return
+	 */
+	public abstract int _getAtkMode();
+
+	/**
+	 * 战斗单元的生命值
+	 * 
+	 * @return
+	 */
+	public abstract int _getHp();
+
+	/**
+	 * 攻击
+	 * 
+	 * @return
+	 */
+	public abstract int _getAttack();
+
+	/**
+	 * 防御
+	 * 
+	 * @return
+	 */
+	public abstract int _getDefense();
+
+	/**
+	 * 体力
+	 * 
+	 * @return
+	 */
+	public abstract int _getStrength();
+
+	/**
+	 * 敏捷
+	 * 
+	 * @return
+	 */
+	public abstract int _getAgility();
+
+	/**
+	 * 额外闪避率
+	 * 
+	 * @return
+	 */
+	public abstract int _getAddDodge();
+
+	/**
+	 * 额外命中率
+	 * 
+	 * @return
+	 */
+	public abstract int _getAddHit();
+
+	/**
+	 * 额外暴击率
+	 * 
+	 * @return
+	 */
+	public abstract int _getDamageAdd();
+
+	/**
+	 * 增伤
+	 * 
+	 * @return
+	 */
+	public abstract int _getDamageDec();
+
+	/**
+	 * 减伤
+	 * 
+	 * @return
+	 */
+	public abstract int _getAddCrit();
+
+	/**
+	 * 取得兵种相克附加效果
+	 * 
+	 * @return
+	 */
+	public abstract double _getArmyAttackRelationAdd(int armyType);
+
+	public abstract double _getArmyAttackRelationDec(int armyType);
+
+	/**
+	 * 判断武将时候已经死亡
+	 * @return
+	 */
+	public boolean dead() {
+		return this.currArmyNum == 0 ? true : false;
+	}
+
+	/**
+	 * 增加武将出手的战力
+	 */
+	public void increasePower() {
+		currPower = currPower + this._getFrequency() / 100d;
+	}
+	
+	/**
+	 * 减少武将出手的战力
+	 */
+	public void decreasePower(){
+		currPower = currPower - 1;
+	}
+
+	public boolean attack() {
+		if (this.isCurrRoundAttacked()) {
+			return false;
+		}
+		CombatUnit target = _getFirstCanAttackUnit();
+		if (target != null) {
+			return _doAttack(target);
+		}
+		return false;
+	}
+
+	/**
+	 * 找到兵种攻击优先级最高的，相同优先级下距离最近的在攻击范围内的目标
+	 * @return
+	 */
+	private CombatUnit _getFirstCanAttackUnit() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	private boolean _doAttack(CombatUnit target) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	public AbstractCombatBehavior doMove() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

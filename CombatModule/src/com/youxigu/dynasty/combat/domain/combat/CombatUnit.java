@@ -594,6 +594,11 @@ public abstract class CombatUnit implements Serializable,Cloneable {
 		return null;
 	}
 
+	/**
+	 * 寻找可以攻击的目标
+	 * @param target
+	 * @return
+	 */
 	private boolean _doAttack(CombatUnit target) {
 		// TODO Auto-generated method stub
 		return false;

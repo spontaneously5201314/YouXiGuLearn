@@ -21,7 +21,7 @@ public class AttackBehavior extends CombatUnitBehavior {
 	/**
 	 * 攻击的结果集
 	 */
-	List<AbstractCombatBehavior> attackResults = new LinkedList<AbstractCombatBehavior>();
+	protected List<AbstractCombatBehavior> attackResults = new LinkedList<AbstractCombatBehavior>();
 	public int getTargetId() {
 		return targetId;
 	}

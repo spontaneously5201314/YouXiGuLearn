@@ -1,6 +1,7 @@
 package com.youxigu.dynasty.combat.domain.combat;
 
 import java.io.Serializable;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -590,8 +591,97 @@ public abstract class CombatUnit implements Serializable,Cloneable {
 	 * @return
 	 */
 	private CombatUnit _getFirstCanAttackUnit() {
-		// TODO Auto-generated method stub
-		return null;
+		CombatUnit curr = null;
+		int currDist = Integer.MAX_VALUE;
+		int currPriority = Integer.MAX_VALUE;
+		int currFPos = Integer.MAX_VALUE;
+		CombatTeam team = this.getParent().getEnemyTeam();
+		int atkRange = this._getAttackRange();
+		boolean hasNotWallCombatUnit = false;
+		for (CombatUnit unit : team.getUnits()) {
+			if (unit.dead() || !unit.isCanAttacked())
+				continue;
+			int distance = Math.abs(this.x - unit.x);
+			if (!(this instanceof CanotAttackedCombatUnit)) {
+				if (!(unit instanceof WallCombatUnit)) {// 城墙占整个Y轴，不计算Y
+					distance = Math.abs(this.y - unit.y) + distance;
+					if (!hasNotWallCombatUnit) {
+						hasNotWallCombatUnit = true;
+					}
+				}
+			}
+			if (distance <= atkRange) {
+				if (currDist == 1) {
+					// 近身的优先级最高，多个近身的则按兵种优先顺序
+					if (distance == 1) {
+						int priority = getPriority(this, unit);
+						if (priority < currPriority) {
+							curr = unit;
+							currDist = distance;
+							currPriority = priority;
+							currFPos = unit._getFormationPos();
+						} else if (priority == currPriority) {
+							// 阵法序号小的优先
+							int fpos = unit._getFormationPos();
+							if (fpos < currFPos) {
+								curr = unit;
+								currDist = distance;
+								currPriority = priority;
+								currFPos = fpos;
+							}
+						}
+					} else {
+						// 扔掉，只要有近身的就打近身的
+					}
+				} else {
+					int priority = getPriority(this, unit);
+					if (distance == 1) {// 近身的优先
+						curr = unit;
+						currDist = distance;
+						currPriority = priority;
+						currFPos = unit._getFormationPos();
+					} else {
+						if (priority < currPriority) {
+							curr = unit;
+							currDist = distance;
+							currPriority = priority;
+							currFPos = unit._getFormationPos();
+						} else if (priority == currPriority) {
+							if (distance < currDist) {
+								curr = unit;
+								currDist = distance;
+								currPriority = priority;
+								currFPos = unit._getFormationPos();
+							} else {
+								// 阵法序号小的优先
+								int fpos = unit._getFormationPos();
+								if (fpos < currFPos) {
+									curr = unit;
+									currDist = distance;
+									currPriority = priority;
+									currFPos = unit._getFormationPos();
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+		// /如果还有非城墙类的可攻击的敌对单位存活，则不攻击城墙
+		if (curr instanceof WallCombatUnit && hasNotWallCombatUnit) {
+			return null;
+		}
+		return curr;
+	}
+
+	/**
+	 * 两个战斗单元，获取其中优先级高的
+	 * @param combatUnit
+	 * @param unit
+	 * @return
+	 */
+	private int getPriority(CombatUnit unit1, CombatUnit unit2) {
+		return this.getCombatEngine().getArmyAttackPriority(unit1._getUnitArmyType(), unit2._getUnitArmyType());
 	}
 
 	/**

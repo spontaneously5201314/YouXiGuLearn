@@ -254,8 +254,12 @@ public class CombatEngine implements ICombatEngine {
 		}
 	}
 
+	/**
+	 * 一个回合结束后需要做的事情
+	 * @param combat
+	 * @param units
+	 */
 	private void doafterNextRound(Combat combat, List<CombatUnit> units) {
-		// TODO Auto-generated method stub
 		
 	}
 

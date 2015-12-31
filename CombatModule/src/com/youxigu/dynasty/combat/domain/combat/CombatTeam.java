@@ -71,9 +71,9 @@ public class CombatTeam implements Serializable {
 	private List<CombatUnit> units;
 
 	/**
-	 * 所属的战斗场景
+	 * 所属的战斗
 	 */
-	private transient CombatDB parent;
+	private transient Combat parent;
 
 	/**
 	 * 战斗结果分数
@@ -203,11 +203,11 @@ public class CombatTeam implements Serializable {
 		this.units = units;
 	}
 
-	public CombatDB getParent() {
+	public Combat getParent() {
 		return parent;
 	}
 
-	public void setParent(CombatDB parent) {
+	public void setParent(Combat parent) {
 		this.parent = parent;
 	}
 
@@ -321,5 +321,17 @@ public class CombatTeam implements Serializable {
 
 	public void setTempBuf(int tempBuf) {
 		this.tempBuf = tempBuf;
+	}
+	
+	/**
+	 * 获得本方军团对方的军团
+	 * @return
+	 */
+	public CombatTeam getEnemyTeam(){
+		CombatTeam attackerTeam = this.getParent().getAttackerTeam();
+		if(this == attackerTeam){
+			return this.getParent().getDefenderTeam();
+		}
+		return attackerTeam;
 	}
 }

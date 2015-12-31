@@ -88,4 +88,8 @@ public class CombatSkill implements Serializable {
 	public void setFiredCount(int firedCount) {
 		this.firedCount = firedCount;
 	}
+
+	public Object getTarget() {
+		return null;
+	}
 }

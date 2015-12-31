@@ -690,12 +690,10 @@ public abstract class CombatUnit implements Serializable,Cloneable {
 	 * @return
 	 */
 	private boolean _doAttack(CombatUnit target) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	public AbstractCombatBehavior doMove() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 

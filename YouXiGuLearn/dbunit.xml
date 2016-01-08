@@ -1,0 +1,11 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<dataset>
+  <animals id="1" name="dog"/>
+  <animals id="2" name="cat"/>
+  <animals id="3" name="penguin"/>
+  <animals id="4" name="lax"/>
+  <animals id="5" name="whale"/>
+  <animals id="6" name="ostrich"/>
+  <animals id="7" name="fuck"/>
+  <animals id="8" name="love"/>
+</dataset>

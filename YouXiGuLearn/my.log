@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2016-01-12T17:27:13</date>
+  <millis>1452590833150</millis>
+  <sequence>15</sequence>
+  <logger>com.mycompany</logger>
+  <level>INFO</level>
+  <class>com.youxigu.se.logger.MemoryHandlerTest</class>
+  <method>main</method>
+  <thread>1</thread>
+  <message>日志记录16</message>
+</record>
+<record>
+  <date>2016-01-12T17:27:13</date>
+  <millis>1452590833150</millis>
+  <sequence>16</sequence>
+  <logger>com.mycompany</logger>
+  <level>INFO</level>
+  <class>com.youxigu.se.logger.MemoryHandlerTest</class>
+  <method>main</method>
+  <thread>1</thread>
+  <message>日志记录17</message>
+</record>
+<record>
+  <date>2016-01-12T17:27:13</date>
+  <millis>1452590833151</millis>
+  <sequence>17</sequence>
+  <logger>com.mycompany</logger>
+  <level>INFO</level>
+  <class>com.youxigu.se.logger.MemoryHandlerTest</class>
+  <method>main</method>
+  <thread>1</thread>
+  <message>日志记录18</message>
+</record>
+<record>
+  <date>2016-01-12T17:27:13</date>
+  <millis>1452590833151</millis>
+  <sequence>18</sequence>
+  <logger>com.mycompany</logger>
+  <level>INFO</level>
+  <class>com.youxigu.se.logger.MemoryHandlerTest</class>
+  <method>main</method>
+  <thread>1</thread>
+  <message>日志记录19</message>
+</record>
+<record>
+  <date>2016-01-12T17:27:13</date>
+  <millis>1452590833151</millis>
+  <sequence>19</sequence>
+  <logger>com.mycompany</logger>
+  <level>INFO</level>
+  <class>com.youxigu.se.logger.MemoryHandlerTest</class>
+  <method>main</method>
+  <thread>1</thread>
+  <message>日志记录20</message>
+</record>
+</log>
